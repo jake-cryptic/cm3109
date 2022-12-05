@@ -1,5 +1,6 @@
 import logging
 from os.path import isfile
+from matrix import Matrix
 
 
 class WMG:
@@ -53,6 +54,14 @@ class WMG:
 
 		logging.debug(self.participants)
 		logging.debug(self.participant_relations)
+
+	def create_matrix(self) -> Matrix:
+		m = Matrix(self.total_participants, self.total_participants)
+
+		for relation in self.participant_relations:
+			m.write(int(relation[0])-1, int(relation[1])-1, int(relation[2]))
+
+		return m
 
 
 if __name__ == '__main__':

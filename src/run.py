@@ -10,8 +10,11 @@ class CM3109Runner:
 
     def __init__(self):
         self.parser = WMG()
-        self.parser.read_file('data/1994_Formula_One.wmg')
+        self.parser.read_file('../data/1994_Formula_One.wmg')
         self.parser.parse_file()
+
+        m = self.parser.create_matrix()
+        m.display()
 
     def run(self) -> None:
         simu = SimulatedAnnealing(1.0, 1.0, 3)
