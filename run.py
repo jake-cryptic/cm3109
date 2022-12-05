@@ -1,11 +1,7 @@
 #!/usr/bin/python3
+from sa import SimulatedAnnealing
 from wmg import WMG
-from math import exp
 import logging
-
-
-def simulated_annealing(e: float, t: float) -> float:
-    return exp(-1 * (e / t))
 
 
 class CM3109Runner:
@@ -18,6 +14,7 @@ class CM3109Runner:
         self.parser.parse_file()
 
     def run(self) -> None:
+        simu = SimulatedAnnealing(1.0, 1.0, 3)
         pass
 
 
