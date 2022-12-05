@@ -10,8 +10,10 @@ class WMG:
 	data_line: str
 
 	file_lines: list
+	file_loaded: bool
 
 	def __init__(self):
+		self.file_loaded = False
 		self.file_lines = []
 		self.participants = {}
 		self.participant_relations = []
@@ -27,7 +29,13 @@ class WMG:
 				self.file_lines.append(line.strip())
 				line = f.readline()
 
+			self.file_loaded = True
+
 	def parse_file(self) -> None:
+		if not self.file_loaded:
+			logging.error(f'Attempted to call parse_file() before file loaded!')
+			return
+
 		self.total_participants = int(self.file_lines[0])
 		self.data_line = str(self.file_lines[self.total_participants + 1])
 
@@ -52,5 +60,5 @@ if __name__ == '__main__':
 
 	# To test the class
 	w = WMG()
-	w.read_file('1994_Formula_One.wmg')
+	w.read_file('data/1994_Formula_One.wmg')
 	w.parse_file()

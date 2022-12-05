@@ -4,6 +4,6 @@ Please run using Python 3.10 or higher if possible, that is the version of pytho
 
 Example of running code:
 ```bash
-python3 run.py
+python3 src/run.py
 ```
 

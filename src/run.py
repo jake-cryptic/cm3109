@@ -10,7 +10,7 @@ class CM3109Runner:
 
     def __init__(self):
         self.parser = WMG()
-        self.parser.read_file('1994_Formula_One.wmg')
+        self.parser.read_file('data/1994_Formula_One.wmg')
         self.parser.parse_file()
 
     def run(self) -> None:
