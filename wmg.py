@@ -16,7 +16,7 @@ class WMG:
 		self.participants = {}
 		self.participant_relations = []
 
-	def read_file(self, file_name):
+	def read_file(self, file_name: str) -> None:
 		if not isfile(file_name):
 			logging.error(f'Could not find file: {file_name}')
 			return
@@ -27,7 +27,7 @@ class WMG:
 				self.file_lines.append(line.strip())
 				line = f.readline()
 
-	def parse_file(self):
+	def parse_file(self) -> None:
 		self.total_participants = int(self.file_lines[0])
 		self.data_line = str(self.file_lines[self.total_participants + 1])
 
