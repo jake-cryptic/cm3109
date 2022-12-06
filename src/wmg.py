@@ -1,4 +1,6 @@
 import logging
+import numpy as np
+import sys
 from os.path import isfile
 
 
@@ -6,6 +8,7 @@ class WMG:
 	total_participants: int
 	participants: dict
 	participant_relations: list[list[int]]
+	participant_matrix: np.array
 	participant_id_list: list[int]
 	data_line: str
 
@@ -40,6 +43,7 @@ class WMG:
 		self.total_participants = int(self.file_lines[0])
 		self.participant_id_list = list(range(1, self.total_participants + 1))
 		self.data_line = str(self.file_lines[self.total_participants + 1])
+		self.participant_matrix = np.zeros((self.total_participants + 1, self.total_participants + 1))
 
 		# Parse participant list
 		for i in self.participant_id_list:
@@ -52,6 +56,7 @@ class WMG:
 			logging.debug(f'Relation: {self.file_lines[i]}')
 			relation = list(map(int, self.file_lines[i].split(',')))
 			self.participant_relations.append(relation)
+			self.participant_matrix[relation[1], relation[2]] = relation[0]
 
 		logging.debug(self.participants)
 		logging.debug(self.participant_relations)
@@ -60,8 +65,10 @@ class WMG:
 
 if __name__ == '__main__':
 	logging.basicConfig(level=logging.DEBUG, format='%(levelname)s:%(asctime)s - %(message)s')
+	np.set_printoptions(threshold=sys.maxsize)
 
 	# To test the class
 	w = WMG()
 	w.read_file('data/1994_Formula_One.wmg')
 	w.parse_file()
+	print(w.participant_matrix)

@@ -59,7 +59,7 @@ class SimulatedAnnealing:
 		uphill_moves = 0
 
 		for i in range(self.t_length):
-			logging.debug(f'\t- Inner loop iteration {i} / {self.t_length}')
+			#logging.debug(f'\t- Inner loop iteration {i} / {self.t_length}')
 
 			new_ranking = self._ranking_current.get_neighbour()
 			delta_cost = new_ranking.score - self._ranking_current.score

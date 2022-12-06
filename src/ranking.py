@@ -11,7 +11,7 @@ class RankedSet:
 	score: int
 
 	def __init__(self, data: list[int], relations: list[list[int]]):
-		logging.debug(f'RankedSet created with {len(data)} IDs: {data}')
+		#logging.debug(f'RankedSet created with {len(data)} IDs: {data}')
 
 		self._data = data
 		self._total_participants = len(self._data)
@@ -29,8 +29,8 @@ class RankedSet:
 				score = 0
 				# TODO: Improve this horribly inefficient search
 				for k in self._relations:
-					if (i == k[0] and j == k[1]) or (j == k[0] and i == k[1]):
-						score = k[2]
+					if (i == k[1] and j == k[2]) or (j == k[1] and i == k[2]):
+						score = k[0]
 				if score > 0:
 					tmp_score += abs(score)
 
