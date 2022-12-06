@@ -34,6 +34,9 @@ class RankedSet:
 
 		self.score = tmp_score
 
+	def get_rankings(self) -> list[int]:
+		return self._data
+
 	def get_neighbour(self):
 		return self._neighbourhood_shift(3)
 

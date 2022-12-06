@@ -49,7 +49,7 @@ class WMG:
 		for i in self.participant_id_list:
 			logging.debug(f'Participant: {self.file_lines[i]}')
 			participant = self.file_lines[i].split(',')
-			self.participants[participant[0]] = participant[1]
+			self.participants[int(participant[0])] = participant[1]
 
 		# Parse participant relations
 		for i in range(self.total_participants + 2, len(self.file_lines)):
