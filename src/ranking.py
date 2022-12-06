@@ -1,4 +1,5 @@
 import logging
+import numpy as np
 from random import shuffle
 from copy import copy
 
@@ -7,10 +8,10 @@ class RankedSet:
 
 	# Set of driver IDs (IN ORDER)
 	_data: list[int]
-	_relations: list[list[int]]
+	_relations: np.ndarray
 	score: int
 
-	def __init__(self, data: list[int], relations: list[list[int]]):
+	def __init__(self, data: list[int], relations):
 		#logging.debug(f'RankedSet created with {len(data)} IDs: {data}')
 
 		self._data = data
@@ -20,19 +21,16 @@ class RankedSet:
 		self.score = 0
 		self.calculate_score()
 
-	def calculate_score(self):
+	def calculate_score(self) -> None:
 		tmp_score = 0
-		for i, driver in enumerate(self._data):
-			#print(i, driver)
-			for j in range(i, self._total_participants):
-				#print(i, j, driver, self._data[j])
-				score = 0
-				# TODO: Improve this horribly inefficient search
-				for k in self._relations:
-					if (i == k[1] and j == k[2]) or (j == k[1] and i == k[2]):
-						score = k[0]
+		for driver_a_index, driver_a_id in enumerate(self._data):
+			for driver_b_index in range(driver_a_index, self._total_participants):
+				driver_b_id = self._data[driver_b_index]
+				print(f'{driver_a_index=}\t{driver_a_id=}\t{driver_b_index=}\t{driver_b_id=}')
+
+				score = self._relations[driver_b_id, driver_a_id]
 				if score > 0:
-					tmp_score += abs(score)
+					tmp_score += score
 
 		self.score = tmp_score
 
