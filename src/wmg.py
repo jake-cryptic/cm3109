@@ -4,7 +4,6 @@ from matrix import Matrix
 
 
 class WMG:
-
 	total_participants: int
 	participants: dict
 	participant_relations: list
@@ -59,7 +58,7 @@ class WMG:
 		m = Matrix(self.total_participants, self.total_participants)
 
 		for relation in self.participant_relations:
-			m.write(int(relation[0])-1, int(relation[1])-1, int(relation[2]))
+			m.write(int(relation[0]) - 1, int(relation[1]) - 1, int(relation[2]))
 
 		return m
 

@@ -5,13 +5,13 @@ import logging
 
 
 def main():
-    parser = WMG()
-    parser.read_file('../data/1994_Formula_One.wmg')
-    parser.parse_file()
+	parser = WMG()
+	parser.read_file('../data/1994_Formula_One.wmg')
+	parser.parse_file()
 
-    m = parser.create_matrix()
-    m.display()
+	m = parser.create_matrix()
+	m.display()
 
 
 if __name__ == '__main__':
-    main()
+	main()
