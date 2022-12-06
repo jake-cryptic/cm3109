@@ -9,7 +9,12 @@ def main():
 	parser.read_file('../data/1994_Formula_One.wmg')
 	parser.parse_file()
 
-	sa = SimulatedAnnealing(100, 10, 10, 0.95)
+	sa = SimulatedAnnealing(
+		initial_t=100,
+		t_length=10,
+		max_iterations=10,
+		cooling_ratio=0.95
+	)
 	sa.set_wmg(parser)
 	sa.run_outer()
 	sa.get_execution_time(f'End of testing, best score was: {sa.get_best_ranking().score}')
