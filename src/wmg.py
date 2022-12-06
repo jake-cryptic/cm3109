@@ -38,11 +38,11 @@ class WMG:
 			return
 
 		self.total_participants = int(self.file_lines[0])
-		self.participant_id_set = set(range(1, self.total_participants+1))
+		self.participant_id_set = set(range(1, self.total_participants + 1))
 		self.data_line = str(self.file_lines[self.total_participants + 1])
 
 		# Parse participant list
-		for i in range(1, self.total_participants + 1):
+		for i in self.participant_id_set:
 			logging.debug(f'Participant: {self.file_lines[i]}')
 			participant = self.file_lines[i].split(',')
 			self.participants[participant[0]] = participant[1]
