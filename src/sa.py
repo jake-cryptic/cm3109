@@ -35,6 +35,7 @@ class SimulatedAnnealing:
 
 		self.max_iterations = max_iterations  # Maximum iterations of outer loop
 		self.cooling_ratio = cooling_ratio  # Change of the thermostat
+		logging.info(f'Running SimulatedAnnealing with parameters:\n\t- initial_t = {initial_t}\n\t- t_length = {t_length}\n\t- max_iterations = {max_iterations}\n\t- cooling_ratio = {cooling_ratio}')
 
 	def set_wmg(self, wmg) -> None:
 		self._wmg = wmg
@@ -76,7 +77,7 @@ class SimulatedAnnealing:
 
 	def get_execution_time(self, msg: str) -> None:
 		self.last_exec_time = time()
-		logging.info(f'{self.last_exec_time - self.start_time}s execution time. {msg}')
+		logging.info(f'{round(self.last_exec_time - self.start_time, 3)}s execution time. {msg}')
 
 	def get_best_ranking(self):
 		return self._ranking_best

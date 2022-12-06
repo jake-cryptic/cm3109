@@ -26,7 +26,7 @@ class RankedSet:
 		for driver_a_index, driver_a_id in enumerate(self._data):
 			for driver_b_index in range(driver_a_index, self._total_participants):
 				driver_b_id = self._data[driver_b_index]
-				print(f'{driver_a_index=}\t{driver_a_id=}\t{driver_b_index=}\t{driver_b_id=}')
+				logging.debug(f'{driver_a_index=}\t{driver_a_id=}\t{driver_b_index=}\t{driver_b_id=}')
 
 				score = self._relations[driver_b_id, driver_a_id]
 				if score > 0:
