@@ -42,8 +42,8 @@ class SimulatedAnnealing:
 
 	def _set_ranking_variables(self):
 		self._ranking_initial = \
-		self._ranking_current = \
-		self._ranking_best = RankedSet(set(range(self._wmg.total_participants)))
+			self._ranking_current = \
+			self._ranking_best = RankedSet(self._wmg.participant_id_set)
 
 	def update_temperature(self) -> None:
 		self.current_t *= self.cooling_ratio

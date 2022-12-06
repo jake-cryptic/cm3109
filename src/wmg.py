@@ -1,12 +1,12 @@
 import logging
 from os.path import isfile
-from matrix import Matrix
 
 
 class WMG:
 	total_participants: int
 	participants: dict
-	participant_relations: list
+	participant_relations: list[list[int]]
+	participant_id_set: set[int]
 	data_line: str
 
 	file_lines: list
@@ -17,6 +17,7 @@ class WMG:
 		self.file_lines = []
 		self.participants = {}
 		self.participant_relations = []
+		self.participant_id_set = set()
 
 	def read_file(self, file_name: str) -> None:
 		if not isfile(file_name):
@@ -37,6 +38,7 @@ class WMG:
 			return
 
 		self.total_participants = int(self.file_lines[0])
+		self.participant_id_set = set(range(1, self.total_participants+1))
 		self.data_line = str(self.file_lines[self.total_participants + 1])
 
 		# Parse participant list
@@ -48,19 +50,12 @@ class WMG:
 		# Parse participant relations
 		for i in range(self.total_participants + 2, len(self.file_lines)):
 			logging.debug(f'Relation: {self.file_lines[i]}')
-			relation = self.file_lines[i].split(',')
+			relation = list(map(int, self.file_lines[i].split(',')))
 			self.participant_relations.append(relation)
 
 		logging.debug(self.participants)
 		logging.debug(self.participant_relations)
-
-	def create_matrix(self) -> Matrix:
-		m = Matrix(self.total_participants, self.total_participants)
-
-		for relation in self.participant_relations:
-			m.write(int(relation[0]) - 1, int(relation[1]) - 1, int(relation[2]))
-
-		return m
+		logging.debug(self.participant_id_set)
 
 
 if __name__ == '__main__':
