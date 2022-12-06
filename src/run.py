@@ -12,6 +12,7 @@ def main():
 	sa = SimulatedAnnealing(100, 10, 10, 0.95)
 	sa.set_wmg(parser)
 	sa.run_outer()
+	sa.get_execution_time(f'End of testing, best score was: {sa.get_best_ranking().score}')
 
 
 if __name__ == '__main__':

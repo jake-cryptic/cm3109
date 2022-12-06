@@ -7,7 +7,7 @@ import logging
 
 
 class SimulatedAnnealing:
-	# Air conditioning <--- this is a joke
+	# Air conditioning
 	current_t: float
 	initial_t: float
 	t_length: int
@@ -34,7 +34,7 @@ class SimulatedAnnealing:
 		self.t_length = t_length  # Temperature length
 
 		self.max_iterations = max_iterations  # Maximum iterations of outer loop
-		self.cooling_ratio = cooling_ratio  # Change of the thermostat <-- another joke
+		self.cooling_ratio = cooling_ratio  # Change of the thermostat
 
 	def set_wmg(self, wmg) -> None:
 		self._wmg = wmg
@@ -76,7 +76,10 @@ class SimulatedAnnealing:
 
 	def get_execution_time(self, msg: str) -> None:
 		self.last_exec_time = time()
-		logging.info(f'{self.last_exec_time - self.start_time} {msg}')
+		logging.info(f'{self.last_exec_time - self.start_time}s execution time. {msg}')
+
+	def get_best_ranking(self):
+		return self._ranking_best
 
 
 if __name__ == '__main__':
