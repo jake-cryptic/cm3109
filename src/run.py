@@ -9,9 +9,11 @@ def main():
 	parser.read_file('../data/1994_Formula_One.wmg')
 	parser.parse_file()
 
-	m = parser.create_matrix()
-	m.display()
+	sa = SimulatedAnnealing(100, 10, 10, 0.95)
+	sa.set_wmg(parser)
+	sa.run_outer()
 
 
 if __name__ == '__main__':
+	logging.basicConfig(level=logging.DEBUG, format='%(levelname)s:%(asctime)s - %(message)s')
 	main()

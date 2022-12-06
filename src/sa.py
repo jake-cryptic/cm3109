@@ -1,5 +1,8 @@
 from math import exp
 from time import time, strftime
+from random import random
+from ranking import RankedSet
+from wmg import WMG
 import logging
 
 
@@ -15,6 +18,12 @@ class SimulatedAnnealing:
 	start_time: float
 	last_exec_time: float
 
+	# Data set
+	_wmg: WMG
+	_ranking_initial: RankedSet
+	_ranking_current: RankedSet
+	_ranking_best: RankedSet
+
 	def __init__(self, initial_t: float, t_length: int, max_iterations: int, cooling_ratio: float):
 		self.start_time = time()
 		self.last_exec_time = time()
@@ -27,8 +36,14 @@ class SimulatedAnnealing:
 		self.max_iterations = max_iterations  # Maximum iterations of outer loop
 		self.cooling_ratio = cooling_ratio  # Change of the thermostat <-- another joke
 
-	def cooling(self, x):
-		return x
+	def set_wmg(self, wmg) -> None:
+		self._wmg = wmg
+		self._set_ranking_variables()
+
+	def _set_ranking_variables(self):
+		self._ranking_initial = \
+		self._ranking_current = \
+		self._ranking_best = RankedSet(set(range(self._wmg.total_participants)))
 
 	def update_temperature(self) -> None:
 		self.current_t *= self.cooling_ratio
@@ -45,13 +60,14 @@ class SimulatedAnnealing:
 
 		for i in range(self.t_length):
 			logging.debug(f'\t- Inner loop iteration {i} / {self.t_length}')
-			#neighbor = 1
-			#delta_cost = self.cooling(x_best) - self.cooling()
-
-			q = 0.1
-			#qt = exp(-1 * (delta_cost / self.T))
-			#if q < qt:
-			#    uphill_moves += 1
+			# new_ranking =
+			delta_cost = 0
+			if delta_cost > 0:
+				change_pb = exp(-1 * delta_cost / self.current_t)
+				if change_pb > random():
+					uphill_moves += 1
+			else:
+				pass
 
 	def get_execution_time(self, msg: str) -> None:
 		self.last_exec_time = time()
