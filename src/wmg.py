@@ -6,7 +6,7 @@ class WMG:
 	total_participants: int
 	participants: dict
 	participant_relations: list[list[int]]
-	participant_id_set: set[int]
+	participant_id_list: list[int]
 	data_line: str
 
 	file_lines: list
@@ -17,7 +17,7 @@ class WMG:
 		self.file_lines = []
 		self.participants = {}
 		self.participant_relations = []
-		self.participant_id_set = set()
+		self.participant_id_list = []
 
 	def read_file(self, file_name: str) -> None:
 		if not isfile(file_name):
@@ -38,11 +38,11 @@ class WMG:
 			return
 
 		self.total_participants = int(self.file_lines[0])
-		self.participant_id_set = set(range(1, self.total_participants + 1))
+		self.participant_id_list = list(range(1, self.total_participants + 1))
 		self.data_line = str(self.file_lines[self.total_participants + 1])
 
 		# Parse participant list
-		for i in self.participant_id_set:
+		for i in self.participant_id_list:
 			logging.debug(f'Participant: {self.file_lines[i]}')
 			participant = self.file_lines[i].split(',')
 			self.participants[participant[0]] = participant[1]
@@ -55,7 +55,7 @@ class WMG:
 
 		logging.debug(self.participants)
 		logging.debug(self.participant_relations)
-		logging.debug(self.participant_id_set)
+		logging.debug(self.participant_id_list)
 
 
 if __name__ == '__main__':

@@ -1,13 +1,15 @@
 import logging
+from random import shuffle
+from copy import copy
 
 
 class RankedSet:
 
 	# Set of driver IDs (IN ORDER)
-	_data: set[int]
+	_data: list[int]
 	score: int
 
-	def __init__(self, data: set[int]):
+	def __init__(self, data: list[int]):
 		logging.debug(f'RankedSet created with {len(data)} IDs: {data}')
 
 		self._data = data
@@ -17,7 +19,12 @@ class RankedSet:
 		tmp_score = 0
 		pass
 
+	def get_neighbour(self):
+		c = copy(self._data)
+		shuffle(c)
+		return RankedSet(c)
+
 
 if __name__ == '__main__':
 	logging.basicConfig(level=logging.DEBUG, format='%(levelname)s:%(asctime)s - %(message)s')
-	rs = RankedSet(set(range(1, 45)))
+	rs = RankedSet(list(range(1, 45)))

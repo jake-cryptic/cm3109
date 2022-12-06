@@ -43,7 +43,7 @@ class SimulatedAnnealing:
 	def _set_ranking_variables(self):
 		self._ranking_initial = \
 			self._ranking_current = \
-			self._ranking_best = RankedSet(self._wmg.participant_id_set)
+			self._ranking_best = RankedSet(self._wmg.participant_id_list)
 
 	def update_temperature(self) -> None:
 		self.current_t *= self.cooling_ratio
@@ -61,7 +61,7 @@ class SimulatedAnnealing:
 		for i in range(self.t_length):
 			logging.debug(f'\t- Inner loop iteration {i} / {self.t_length}')
 
-			new_ranking = RankedSet(self._wmg.participant_id_set) ## CHANGE THIS
+			new_ranking = self._ranking_current.get_neighbour()
 			delta_cost = new_ranking.score - self._ranking_current.score
 
 			if delta_cost <= 0:
