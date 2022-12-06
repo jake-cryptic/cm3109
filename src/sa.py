@@ -60,14 +60,19 @@ class SimulatedAnnealing:
 
 		for i in range(self.t_length):
 			logging.debug(f'\t- Inner loop iteration {i} / {self.t_length}')
-			# new_ranking =
-			delta_cost = 0
-			if delta_cost > 0:
+
+			new_ranking = RankedSet(self._wmg.participant_id_set) ## CHANGE THIS
+			delta_cost = new_ranking.score - self._ranking_current.score
+
+			if delta_cost <= 0:
+				self._ranking_current = new_ranking
+				if self._ranking_current.score < self._ranking_best.score:
+					self._ranking_best = self._ranking_current
+			else:
 				change_pb = exp(-1 * delta_cost / self.current_t)
 				if change_pb > random():
+					self._ranking_current = new_ranking
 					uphill_moves += 1
-			else:
-				pass
 
 	def get_execution_time(self, msg: str) -> None:
 		self.last_exec_time = time()
