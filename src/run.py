@@ -27,6 +27,7 @@ def main() -> None:
 		cooling_ratio=0.98
 	)
 	sa.set_wmg(parser)
+	sa.initialise_rankings()
 	sa.run_outer()
 	sa.get_execution_time(f'End of testing, best score was: {sa.get_best_ranking().score}')
 
