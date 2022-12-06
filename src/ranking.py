@@ -35,9 +35,18 @@ class RankedSet:
 		self.score = tmp_score
 
 	def get_neighbour(self):
+		return self._neighbourhood_shift(3)
+
+	# Playing around with neighbourhood functions
+	def _neighbourhood_shuffle(self):
 		c = copy(self._data)
 		shuffle(c)
 		return RankedSet(c, self._relations)
+
+	def _neighbourhood_shift(self, shift: int = 3):
+		c = copy(self._data)
+		new_data = c[shift:] + c[:shift]
+		return RankedSet(new_data, self._relations)
 
 
 if __name__ == '__main__':

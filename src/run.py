@@ -11,9 +11,9 @@ def main():
 
 	sa = SimulatedAnnealing(
 		initial_t=100,
-		t_length=10,
+		t_length=100,
 		max_iterations=100,
-		cooling_ratio=0.95
+		cooling_ratio=0.98
 	)
 	sa.set_wmg(parser)
 	sa.run_outer()
