@@ -67,19 +67,25 @@ class SimulatedAnnealing:
 
 	def run_inner(self) -> None:
 		for i in range(self.t_length):
+			# If we have reached max number of uphill moves break out of loop
+			if self.uphill_moves >= self.max_uphill_moves:
+				break
+
 			# Generate a neighbouring solution to check
 			new_ranking = self._ranking_current.get_neighbour()
 
 			# Compute the change of the cost
 			delta_cost = new_ranking.score - self._ranking_current.score
 
-			if delta_cost <= 0:
+			if new_ranking.score <= self._ranking_current.score:
+				# If this neighbour has the same or better score, move to it
 				self._ranking_current = copy(new_ranking)
 
 				# If new ranking has a better score than the best... then it is the best
 				if new_ranking.score > self._ranking_best.score:
 					self._ranking_best = copy(new_ranking)
 			else:
+				# In this case, the score of the newly tested neighbour is worse than the current
 				# e ^ (-delta_cost / current_temperature)
 				change_pb = exp(-1 * delta_cost / self.current_t)
 
@@ -90,9 +96,7 @@ class SimulatedAnnealing:
 				if q < change_pb:
 					self._ranking_current = copy(new_ranking)
 					self.uphill_moves += 1
-					logging.info(f'Uphill move counter: {self.uphill_moves} / {self.max_uphill_moves}')
-					if self.uphill_moves >= self.max_uphill_moves:
-						break
+					logging.debug(f'Uphill move counter: {self.uphill_moves} / {self.max_uphill_moves}')
 
 	def get_execution_time(self, msg: str) -> None:
 		self.last_exec_time = time()
