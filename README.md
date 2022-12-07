@@ -7,3 +7,12 @@ Example of running code:
 python3 src/run.py
 ```
 
+**Important**: Make sure to install numpy before running the application, as I use it to do matrix stuff
+
+```bash
+pip install -r requirements.txt
+# OR
+pip install numpy==1.23.5
+```
+
+Should do the trick
