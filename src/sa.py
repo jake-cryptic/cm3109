@@ -82,7 +82,7 @@ class SimulatedAnnealing:
 				self._ranking_current = copy(new_ranking)
 
 				# If new ranking has a better score than the best... then it is the best
-				if new_ranking.score > self._ranking_best.score:
+				if new_ranking.score < self._ranking_best.score:
 					self._ranking_best = copy(new_ranking)
 			else:
 				# In this case, the score of the newly tested neighbour is worse than the current
