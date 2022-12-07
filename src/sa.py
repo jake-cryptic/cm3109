@@ -1,5 +1,5 @@
 from math import exp
-from time import time, strftime
+from time import time
 from random import random
 from ranking import RankedSet
 from wmg import WMG
@@ -57,25 +57,38 @@ class SimulatedAnnealing:
 		# Stopping criterion
 		while self.uphill_moves >= self.max_uphill_moves:
 			logging.debug(f'Outer loop iteration {self.uphill_moves} / {self.max_uphill_moves}')
+
+			# Function to run the inner loop
 			self.run_inner()
+
+			# This function sets the new temperature based on the cooling ratio
 			self.update_temperature()
 
 	def run_inner(self) -> None:
 		self.uphill_moves = 0
 
 		for i in range(self.t_length):
-			#logging.debug(f'\t- Inner loop iteration {i} / {self.t_length}')
-
+			# Generate a neighbouring solution to check
 			new_ranking = self._ranking_current.get_neighbour()
+
+			# Compute the change of the cost
 			delta_cost = new_ranking.score - self._ranking_current.score
 
 			if delta_cost <= 0:
 				self._ranking_current = new_ranking
-				if self._ranking_current.score < self._ranking_best.score:
+
+				# If new ranking has a better score than the best... then it is the best
+				if new_ranking.score > self._ranking_best.score:
 					self._ranking_best = self._ranking_current
 			else:
+				# e ^ (-delta_cost / current_temperature)
 				change_pb = exp(-1 * delta_cost / self.current_t)
-				if change_pb > random():
+
+				# Random decimal between 0 and 1
+				q = random()
+
+				# Uphill move
+				if q < change_pb:
 					self._ranking_current = new_ranking
 					self.uphill_moves += 1
 
