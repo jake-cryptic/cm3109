@@ -8,7 +8,7 @@ class WMG:
 	total_participants: int
 	participants: dict
 	participant_relations: list[list[int]]
-	participant_matrix: np.array
+	participant_matrix: np.ndarray
 	participant_id_list: list[int]
 	data_line: str
 
