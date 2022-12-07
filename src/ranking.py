@@ -38,7 +38,8 @@ class RankedSet:
 		return self._data
 
 	def get_neighbour(self):
-		return self._neighbourhood_shift(3)
+		#return self._neighbourhood_shift(3)
+		return self._neighbourhood_shuffle()
 
 	# Playing around with neighbourhood functions
 	def _neighbourhood_shuffle(self):

@@ -23,8 +23,8 @@ def main() -> None:
 	sa = SimulatedAnnealing(
 		initial_t=100,
 		t_length=100,
-		max_iterations=10,
-		cooling_ratio=0.98
+		max_iterations=50,
+		cooling_ratio=0.95
 	)
 	sa.set_wmg(parser)
 	sa.initialise_rankings()
