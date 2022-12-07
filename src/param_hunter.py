@@ -40,7 +40,7 @@ def run_hunter() -> None:
 			for test_tl in range(50, 350, 50):
 				current_params[2] = test_tl
 				print(f'- Iterated {test_tl=}')
-				for test_max_uphill_moves in [30,40,50,55,60]:
+				for test_max_uphill_moves in range(30,120,10):
 					current_params[3] = test_max_uphill_moves
 					print(f'- Iterated {test_max_uphill_moves=}')
 					print(f'-Best score currently: {best_score}, with param set: {best_params}, testing params:{current_params}')

@@ -54,7 +54,7 @@ class RankedSet:
 		new_data = c[shift:] + c[:shift]
 		return RankedSet(new_data, self._relations)
 
-	def _neighbourhood_swap(self, swaps: int = 10):
+	def _neighbourhood_swap(self, swaps: int = 3):
 		c = copy(self._data)
 
 		for x in range(swaps):

@@ -17,8 +17,8 @@ def plot(x: list, y: list, fig_name: str, plot_title: str):
 def run_controlled_simulation(parser: WMG, param_to_change: str, param_value):
 	values_dict = {
 		'initial_t': 500,
-		't_length': 200,
-		'max_uphill_moves': 60,
+		't_length': 900,
+		'max_uphill_moves': 100,
 		'cooling_ratio': 0.99
 	}
 
@@ -44,20 +44,20 @@ def run_tests(parser: WMG) -> None:
 		'y': []
 	}
 
-	#for test_initial_t in range(100, 2000, 100):
-	#	data['x'].append(test_initial_t)
-	#	data['y'].append(run_controlled_simulation(parser, 'initial_t', test_initial_t))
-	#plot(data['x'], data['y'], 'Kemeny Score', 'Kemeny Score vs Initial Temperature')
+	for test_initial_t in range(100, 3000, 50):
+		data['x'].append(test_initial_t)
+		data['y'].append(run_controlled_simulation(parser, 'initial_t', test_initial_t))
+	plot(data['x'], data['y'], 'Kemeny Score', 'Kemeny Score vs Initial Temperature')
 
-	#for test_cooling in range(1, 100):
+	#for test_cooling in range(60, 100):
 	#	data['x'].append(test_cooling/100)
 	#	data['y'].append(run_controlled_simulation(parser, 'cooling_ratio', test_cooling/100))
 	#plot(data['x'], data['y'], 'Kemeny Score', 'Kemeny Score vs Cooling Ratio')
 
-	for test_tl in range(50, 350, 10):
-		data['x'].append(test_tl)
-		data['y'].append(run_controlled_simulation(parser, 't_length', test_tl))
-	plot(data['x'], data['y'], 'Kemeny Score', 'Kemeny Score vs t_length')
+	#for test_tl in range(50, 350, 10):
+	#	data['x'].append(test_tl)
+	#	data['y'].append(run_controlled_simulation(parser, 't_length', test_tl))
+	#plot(data['x'], data['y'], 'Kemeny Score', 'Kemeny Score vs t_length')
 
 
 def main() -> None:
