@@ -74,11 +74,11 @@ class SimulatedAnnealing:
 			delta_cost = new_ranking.score - self._ranking_current.score
 
 			if delta_cost <= 0:
-				self._ranking_current = new_ranking
+				self._ranking_current = copy(new_ranking)
 
 				# If new ranking has a better score than the best... then it is the best
 				if new_ranking.score > self._ranking_best.score:
-					self._ranking_best = copy(self._ranking_current)
+					self._ranking_best = copy(new_ranking)
 			else:
 				# e ^ (-delta_cost / current_temperature)
 				change_pb = exp(-1 * delta_cost / self.current_t)
@@ -88,10 +88,10 @@ class SimulatedAnnealing:
 
 				# Uphill move
 				if q < change_pb:
-					self._ranking_current = new_ranking
+					self._ranking_current = copy(new_ranking)
 					self.uphill_moves += 1
 					logging.info(f'Uphill move counter: {self.uphill_moves} / {self.max_uphill_moves}')
-					if self.uphill_moves == self.max_uphill_moves:
+					if self.uphill_moves >= self.max_uphill_moves:
 						break
 
 	def get_execution_time(self, msg: str) -> None:
