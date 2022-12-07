@@ -38,7 +38,10 @@ class RankedSet:
 		return self._data
 
 	def get_neighbour(self):
-		return self._neighbourhood_shift(randint(1, len(self._data)))
+		return self._neighbourhood_swap()
+
+		#return self._neighbourhood_shuffle()
+		#return self._neighbourhood_shift(randint(1, len(self._data)))
 
 	# Playing around with neighbourhood functions
 	def _neighbourhood_shuffle(self):
@@ -51,12 +54,16 @@ class RankedSet:
 		new_data = c[shift:] + c[:shift]
 		return RankedSet(new_data, self._relations)
 
-	def _neighbourhood_swap(self):
+	def _neighbourhood_swap(self, swaps: int = 10):
 		c = copy(self._data)
 
-		dl = len(c)
-		end = dl - 1 if dl % 2 else dl
-		c[1:end:2], c[:end:2] = c[:end:2], c[1:end:2]
+		for x in range(swaps):
+			# Create list of index
+			id_list = list(range(len(c)))
+			shuffle(id_list)
+
+			# Swap two random items in the id list
+			c[id_list[0]], c[id_list[1]] = c[id_list[1]], c[id_list[0]]
 
 		return RankedSet(c, self._relations)
 
