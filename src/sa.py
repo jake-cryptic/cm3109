@@ -42,7 +42,7 @@ class SimulatedAnnealing:
 	def set_wmg(self, wmg) -> None:
 		self._wmg = wmg
 
-	def initialise_rankings(self, id_list: list = []):
+	def initialise_rankings(self, id_list: list = []) -> None:
 		if not id_list:
 			id_list = self._wmg.participant_id_list
 
@@ -55,7 +55,7 @@ class SimulatedAnnealing:
 
 	def run_outer(self) -> None:
 		# Stopping criterion
-		while self.uphill_moves >= self.max_uphill_moves:
+		while self.uphill_moves < self.max_uphill_moves:
 			logging.debug(f'Outer loop iteration {self.uphill_moves} / {self.max_uphill_moves}')
 
 			# Function to run the inner loop
@@ -65,8 +65,6 @@ class SimulatedAnnealing:
 			self.update_temperature()
 
 	def run_inner(self) -> None:
-		self.uphill_moves = 0
-
 		for i in range(self.t_length):
 			# Generate a neighbouring solution to check
 			new_ranking = self._ranking_current.get_neighbour()
@@ -91,12 +89,15 @@ class SimulatedAnnealing:
 				if q < change_pb:
 					self._ranking_current = new_ranking
 					self.uphill_moves += 1
+					logging.info(f'Uphill move counter: {self.uphill_moves} / {self.max_uphill_moves}')
+					if self.uphill_moves == self.max_uphill_moves:
+						break
 
 	def get_execution_time(self, msg: str) -> None:
 		self.last_exec_time = time()
 		logging.info(f'{round(self.last_exec_time - self.start_time, 3)}s execution time. {msg}')
 
-	def get_best_ranking(self):
+	def get_best_ranking(self) -> RankedSet:
 		return self._ranking_best
 
 
