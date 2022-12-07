@@ -2,6 +2,7 @@
 from sa import SimulatedAnnealing
 from ranking import RankedSet
 from wmg import WMG
+from sys import argv
 import logging
 
 
@@ -16,14 +17,23 @@ def print_rankings(ranked_set: RankedSet, parser: WMG) -> None:
 
 
 def main() -> None:
+	file_to_load = '../data/1994_Formula_One.wmg'
+
+	if len(argv) > 1:
+		file_to_load = argv[1]
+		logging.info(f'Will try to load data from specified file: {file_to_load}')
+
 	parser = WMG()
-	parser.read_file('../data/1994_Formula_One.wmg')
+	parser.read_file(file_to_load)
 	parser.parse_file()
+
+	if not parser.file_loaded:
+		exit(1)
 
 	sa = SimulatedAnnealing(
 		initial_t=100,
 		t_length=100,
-		max_iterations=50,
+		max_uphill_moves=50,
 		cooling_ratio=0.95
 	)
 	sa.set_wmg(parser)

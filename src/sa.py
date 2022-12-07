@@ -11,7 +11,8 @@ class SimulatedAnnealing:
 	current_t: float
 	initial_t: float
 	t_length: int
-	max_iterations: int
+	max_uphill_moves: int
+	uphill_moves: int
 	cooling_ratio: float
 
 	# Timing variables
@@ -24,7 +25,7 @@ class SimulatedAnnealing:
 	_ranking_current: RankedSet
 	_ranking_best: RankedSet
 
-	def __init__(self, initial_t: float, t_length: int, max_iterations: int, cooling_ratio: float):
+	def __init__(self, initial_t: float, t_length: int, max_uphill_moves: int, cooling_ratio: float):
 		self.start_time = time()
 		self.last_exec_time = time()
 
@@ -33,9 +34,10 @@ class SimulatedAnnealing:
 		self.initial_t = initial_t  # Initial temperature
 		self.t_length = t_length  # Temperature length
 
-		self.max_iterations = max_iterations  # Maximum iterations of outer loop
+		self.max_uphill_moves = max_uphill_moves  # Maximum uphill moves
+		self.uphill_moves = 0  	# Uphill moves reset to 0
 		self.cooling_ratio = cooling_ratio  # Change of the thermostat
-		logging.info(f'Running SimulatedAnnealing with parameters:\n\t- initial_t = {initial_t}\n\t- t_length = {t_length}\n\t- max_iterations = {max_iterations}\n\t- cooling_ratio = {cooling_ratio}')
+		logging.info(f'Running SimulatedAnnealing with parameters:\n\t- initial_t = {initial_t}\n\t- t_length = {t_length}\n\t- max_uphill_moves = {max_uphill_moves}\n\t- cooling_ratio = {cooling_ratio}')
 
 	def set_wmg(self, wmg) -> None:
 		self._wmg = wmg
@@ -53,13 +55,13 @@ class SimulatedAnnealing:
 
 	def run_outer(self) -> None:
 		# Stopping criterion
-		for i in range(self.max_iterations):
-			logging.debug(f'Outer loop iteration {i} / {self.max_iterations}')
+		while self.uphill_moves >= self.max_uphill_moves:
+			logging.debug(f'Outer loop iteration {self.uphill_moves} / {self.max_uphill_moves}')
 			self.run_inner()
 			self.update_temperature()
 
 	def run_inner(self) -> None:
-		uphill_moves = 0
+		self.uphill_moves = 0
 
 		for i in range(self.t_length):
 			#logging.debug(f'\t- Inner loop iteration {i} / {self.t_length}')
@@ -75,7 +77,7 @@ class SimulatedAnnealing:
 				change_pb = exp(-1 * delta_cost / self.current_t)
 				if change_pb > random():
 					self._ranking_current = new_ranking
-					uphill_moves += 1
+					self.uphill_moves += 1
 
 	def get_execution_time(self, msg: str) -> None:
 		self.last_exec_time = time()
