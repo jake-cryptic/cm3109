@@ -1,3 +1,4 @@
+from copy import copy
 from math import exp
 from time import time
 from random import random
@@ -77,7 +78,7 @@ class SimulatedAnnealing:
 
 				# If new ranking has a better score than the best... then it is the best
 				if new_ranking.score > self._ranking_best.score:
-					self._ranking_best = self._ranking_current
+					self._ranking_best = copy(self._ranking_current)
 			else:
 				# e ^ (-delta_cost / current_temperature)
 				change_pb = exp(-1 * delta_cost / self.current_t)
