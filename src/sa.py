@@ -71,9 +71,11 @@ class SimulatedAnnealing:
 
 			# Compute the change of the cost
 			delta_cost = new_ranking.score - self._ranking_current.score
+			print(f'{delta_cost=}')
 
 			if delta_cost <= 0:
 				self._ranking_current = new_ranking
+				print(f'{new_ranking=}')
 
 				# If new ranking has a better score than the best... then it is the best
 				if new_ranking.score > self._ranking_best.score:
@@ -87,6 +89,7 @@ class SimulatedAnnealing:
 
 				# Uphill move
 				if q < change_pb:
+					print(f'CHANGING')
 					self._ranking_current = new_ranking
 					self.uphill_moves += 1
 					logging.info(f'Uphill move counter: {self.uphill_moves} / {self.max_uphill_moves}')

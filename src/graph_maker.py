@@ -8,7 +8,7 @@ from wmg import WMG
 def plot(x: list, y: list, fig_name: str, plot_title: str):
 	plt.figure(fig_name)
 	plt.title(plot_title)
-	plt.scatter(x, y, s=1)
+	plt.scatter(x, y, s=3)
 	# plt.savefig('figure1.jpg')
 	plt.show()
 	plt.close()
@@ -49,11 +49,15 @@ def run_tests(parser: WMG) -> None:
 	#	data['y'].append(run_controlled_simulation(parser, 'initial_t', test_initial_t))
 	#plot(data['x'], data['y'], 'Kemeny Score', 'Kemeny Score vs Initial Temperature')
 
-	for test_cooling in range(1, 100):
-		data['x'].append(test_cooling/100)
-		data['y'].append(run_controlled_simulation(parser, 'cooling_ratio', test_cooling/100))
+	#for test_cooling in range(1, 100):
+	#	data['x'].append(test_cooling/100)
+	#	data['y'].append(run_controlled_simulation(parser, 'cooling_ratio', test_cooling/100))
+	#plot(data['x'], data['y'], 'Kemeny Score', 'Kemeny Score vs Cooling Ratio')
 
-	plot(data['x'], data['y'], 'Kemeny Score', 'Kemeny Score vs Cooling Ratio')
+	for test_tl in range(50, 350, 10):
+		data['x'].append(test_tl)
+		data['y'].append(run_controlled_simulation(parser, 't_length', test_tl))
+	plot(data['x'], data['y'], 'Kemeny Score', 'Kemeny Score vs t_length')
 
 
 def main() -> None:

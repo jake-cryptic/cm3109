@@ -1,6 +1,6 @@
 import logging
 import numpy as np
-from random import shuffle
+from random import randint, shuffle
 from copy import copy
 
 
@@ -38,9 +38,7 @@ class RankedSet:
 		return self._data
 
 	def get_neighbour(self):
-		# TODO: Fix this function!
-		#return self._neighbourhood_shift(3)
-		return self._neighbourhood_shuffle()
+		return self._neighbourhood_shift(randint(1, len(self._data)))
 
 	# Playing around with neighbourhood functions
 	def _neighbourhood_shuffle(self):
@@ -52,6 +50,15 @@ class RankedSet:
 		c = copy(self._data)
 		new_data = c[shift:] + c[:shift]
 		return RankedSet(new_data, self._relations)
+
+	def _neighbourhood_swap(self):
+		c = copy(self._data)
+
+		dl = len(c)
+		end = dl - 1 if dl % 2 else dl
+		c[1:end:2], c[:end:2] = c[:end:2], c[1:end:2]
+
+		return RankedSet(c, self._relations)
 
 
 if __name__ == '__main__':
