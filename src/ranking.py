@@ -59,7 +59,7 @@ class RankedSet:
 
 		for x in range(swaps):
 			# Create list of index
-			id_list = list(range(len(c)))
+			id_list = list(range(int(len(c)/2)))
 			shuffle(id_list)
 
 			# Swap two random items in the id list
