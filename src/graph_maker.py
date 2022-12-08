@@ -59,7 +59,7 @@ def run_tests(parser: WMG) -> None:
 		plot(data['x'], data['y'], 'Kemeny Score', 'Initial Temperature vs Kemeny Score', 'Initial Temperature', 'Kemeny Score')
 		plot(data['x'], data['y1'], 'Kemeny Score', 'Initial Temperature vs time (ms)', 'Initial Temperature', 'time (ms)')
 
-	if True:
+	if False:
 		for test_cooling in range(5300, 10000, 1):
 			data['x'].append(test_cooling/10000)
 			result = run_controlled_simulation(parser, 'cooling_ratio', test_cooling/10000)
@@ -87,12 +87,40 @@ def run_tests(parser: WMG) -> None:
 		plot(data['x'], data['y1'], 'Kemeny Score', 'num_non_improve vs time (ms)', 'num_non_improve', 'time (ms)')
 
 
+def run_iteration_variance(parser: WMG):
+	data_time = {
+		'x': [],
+		'y': []
+	}
+	data_score = {
+		'x': [],
+		'y': []
+	}
+	for i in range(1, 300):
+		print(i)
+		sa = SimulatedAnnealing(
+			initial_t=4,
+			t_length=120,
+			num_non_improve=120,
+			cooling_ratio=0.95
+		)
+		sa.set_wmg(parser)
+		sa.initialise_rankings()
+		sa.run_outer()
+
+		data_time['x'].append(sa.get_best_ranking().score)
+		data_time['y'].append(sa.return_exec_time_ms())
+
+	plot(data_time['x'], data_time['y'], 'Kemeny Score', 'score vs time', 'Kemeny Score', 'time')
+
+
 def main() -> None:
 	parser = WMG()
 	parser.read_file('../data/1994_Formula_One.wmg')
 	parser.parse_file()
 
-	run_tests(parser)
+	run_iteration_variance(parser)
+	#run_tests(parser)
 
 
 if __name__ == '__main__':
