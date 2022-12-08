@@ -31,10 +31,10 @@ def main() -> None:
 		exit(1)
 
 	sa = SimulatedAnnealing(
-		initial_t=6,
-		t_length=50,
-		num_non_improve=50,
-		cooling_ratio=0.99
+		initial_t=4,
+		t_length=120,
+		num_non_improve=120,
+		cooling_ratio=0.94
 	)
 	sa.set_wmg(parser)
 	sa.initialise_rankings()
