@@ -42,9 +42,9 @@ def run_sa(parser, test_initial_t, test_tl, test_num_non_improve, test_cooling, 
 		hit_time_limit = True
 
 	if hit_time_limit:
-		return 99999
+		return 99999, f'Timout {limit_func_time}s'
 
-	return sa.get_best_ranking().score, sa.get_execution_time('')
+	return (sa.get_best_ranking().score, sa.get_execution_time())
 
 
 def run_hunter() -> None:
@@ -72,7 +72,7 @@ def run_hunter() -> None:
 					print(f'- Iterated {test_num_non_improve=}')
 					print(f'-Best score currently: {best_score}, with param set: {best_params}, testing params:{current_params}')
 
-					score, time_str = run_sa(parser, test_initial_t, test_tl, test_num_non_improve, test_cooling)
+					score, time_str = run_sa(parser, test_initial_t, test_tl, test_num_non_improve, test_cooling, 10)
 
 					if score <= best_score:
 						param_replay = REPLAY_COUNT

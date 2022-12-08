@@ -31,7 +31,7 @@ def main() -> None:
 		exit(1)
 
 	sa = SimulatedAnnealing(
-		initial_t=8,
+		initial_t=6,
 		t_length=50,
 		num_non_improve=50,
 		cooling_ratio=0.99
@@ -40,9 +40,9 @@ def main() -> None:
 	sa.initialise_rankings()
 	sa.run_outer()
 
-	print(sa.get_execution_time(f'End of testing'))
+	timing_str = sa.get_execution_time()
 	print_rankings(sa.get_best_ranking(), parser)
-	print(f'Best score was: {sa.get_best_ranking().score}')
+	print(f'{timing_str}, Kemeny score: {sa.get_best_ranking().score}')
 
 
 if __name__ == '__main__':
