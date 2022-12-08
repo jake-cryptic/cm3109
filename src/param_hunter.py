@@ -44,7 +44,7 @@ def run_sa(parser, test_initial_t, test_tl, test_num_non_improve, test_cooling, 
 	if hit_time_limit:
 		return 99999
 
-	return sa.get_best_ranking().score
+	return sa.get_best_ranking().score, sa.get_execution_time('')
 
 
 def run_hunter() -> None:
@@ -58,7 +58,7 @@ def run_hunter() -> None:
 	current_params = [0, 0, 0, 0]
 	best_params = [0, 0, 0, 0]
 
-	for test_initial_t in range(4, 100, 2):
+	for test_initial_t in range(5, 100, 2):
 		print(f'- Iterated {test_initial_t=}')
 		current_params[0] = test_initial_t
 		for test_cooling in range(90, 99, 3):
@@ -72,19 +72,22 @@ def run_hunter() -> None:
 					print(f'- Iterated {test_num_non_improve=}')
 					print(f'-Best score currently: {best_score}, with param set: {best_params}, testing params:{current_params}')
 
-					score = run_sa(parser, test_initial_t, test_tl, test_num_non_improve, test_cooling)
+					score, time_str = run_sa(parser, test_initial_t, test_tl, test_num_non_improve, test_cooling)
 
 					if score <= best_score:
 						param_replay = REPLAY_COUNT
 						best_params = copy(current_params)
 						best_score = score
+
 						print(f'NEW BEST SCORE of {best_score} FOUND WITH PARAMS: {test_initial_t=}, {test_tl=}, {test_cooling=}, {test_num_non_improve=}')
+						print(time_str)
 
 						# If parameters are good, replay them to see if we get a better score
 						while param_replay > 0:
-							score = run_sa(parser, test_initial_t, test_tl, test_num_non_improve, test_cooling, 10)
+							score, time_str = run_sa(parser, test_initial_t, test_tl, test_num_non_improve, test_cooling, 10)
 							param_replay -= 1
 							if score <= best_score:
+								print(time_str)
 								print(f'REPLAYING! {score} <= {best_score}')
 								param_replay = REPLAY_COUNT
 								best_score = score
