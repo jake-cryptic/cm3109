@@ -102,6 +102,10 @@ class SimulatedAnnealing:
 		exec_time_ms = round(self.last_exec_time - self.start_time,7) * 1000
 		return f'{exec_time_ms}ms execution time'
 
+	def return_exec_time_ms(self) -> int:
+		self.last_exec_time = time()
+		return int(round(self.last_exec_time - self.start_time, 5) * 1000)
+
 	def get_best_ranking(self) -> RankedSet:
 		return self._ranking_best
 
