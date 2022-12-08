@@ -1,6 +1,6 @@
 import logging
 import numpy as np
-from random import randint, shuffle
+from random import shuffle
 from copy import copy
 
 
@@ -12,8 +12,6 @@ class RankedSet:
 	score: int
 
 	def __init__(self, data: list[int], relations):
-		#logging.debug(f'RankedSet created with {len(data)} IDs: {data}')
-
 		self._data = data
 		self._total_participants = len(self._data)
 		self._relations = relations
@@ -23,10 +21,12 @@ class RankedSet:
 
 	def calculate_score(self) -> None:
 		tmp_score = 0
+
+		# TODO: This is not the most efficient method to calculate score, update if we have time
 		for driver_a_index, driver_a_id in enumerate(self._data):
 			for driver_b_index in range(driver_a_index, self._total_participants):
 				driver_b_id = self._data[driver_b_index]
-				logging.debug(f'{driver_a_index=}\t{driver_a_id=}\t{driver_b_index=}\t{driver_b_id=}')
+				# logging.debug(f'{driver_a_index=}\t{driver_a_id=}\t{driver_b_index=}\t{driver_b_id=}')
 
 				score = self._relations[driver_b_id, driver_a_id]
 				if score > 0:
@@ -38,10 +38,8 @@ class RankedSet:
 		return self._data
 
 	def get_neighbour(self):
+		# Change neighbourhood function here (debugging)
 		return self._neighbourhood_swap()
-
-		#return self._neighbourhood_shuffle()
-		#return self._neighbourhood_shift(randint(1, len(self._data)))
 
 	# Playing around with neighbourhood functions
 	def _neighbourhood_shuffle(self):
@@ -69,6 +67,7 @@ class RankedSet:
 	def _neighbourhood_swap_multiple(self, swaps: int = 1):
 		c = copy(self._data)
 
+		# How many swaps to do
 		for x in range(swaps):
 			# Create list of index
 			id_list = list(range(int(len(c))))
