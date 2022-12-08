@@ -54,7 +54,19 @@ class RankedSet:
 		new_data = c[shift:] + c[:shift]
 		return RankedSet(new_data, self._relations)
 
-	def _neighbourhood_swap(self, swaps: int = 1):
+	def _neighbourhood_swap(self):
+		c = copy(self._data)
+
+		# Create list of index
+		id_list = list(range(int(len(c))))
+		shuffle(id_list)
+
+		# Swap two random items in the id list
+		c[id_list[0]], c[id_list[1]] = c[id_list[1]], c[id_list[0]]
+
+		return RankedSet(c, self._relations)
+
+	def _neighbourhood_swap_multiple(self, swaps: int = 1):
 		c = copy(self._data)
 
 		for x in range(swaps):

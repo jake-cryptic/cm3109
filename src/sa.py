@@ -1,4 +1,3 @@
-from copy import copy
 from math import exp
 from time import time
 from random import random
