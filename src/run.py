@@ -33,7 +33,7 @@ def main() -> None:
 	sa = SimulatedAnnealing(
 		initial_t=4,
 		t_length=120,
-		num_non_improve=120,
+		num_non_improve=125,
 		cooling_ratio=0.94
 	)
 	sa.set_wmg(parser)
@@ -46,5 +46,5 @@ def main() -> None:
 
 
 if __name__ == '__main__':
-	logging.basicConfig(level=logging.INFO, format='%(levelname)s:%(asctime)s - %(message)s')
+	logging.basicConfig(level=logging.WARNING, format='%(levelname)s:%(asctime)s - %(message)s')
 	main()
