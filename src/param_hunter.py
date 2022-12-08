@@ -52,13 +52,13 @@ def run_hunter() -> None:
 	parser.read_file('data/1994_Formula_One.wmg')
 	parser.parse_file()
 
-	REPLAY_COUNT = parser.total_participants
+	REPLAY_COUNT = 10
 
 	best_score = 749  # Initial solution
 	current_params = [0, 0, 0, 0]
 	best_params = [0, 0, 0, 0]
 
-	for test_initial_t in range(10, 100, 5):
+	for test_initial_t in range(4, 100, 2):
 		print(f'- Iterated {test_initial_t=}')
 		current_params[0] = test_initial_t
 		for test_cooling in range(90, 99, 3):

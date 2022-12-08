@@ -98,9 +98,9 @@ class SimulatedAnnealing:
 					self.uphill_moves += 1
 					logging.debug(f'Uphill move counter: {self.uphill_moves} / {self.max_uphill_moves}')
 
-	def get_execution_time(self, msg: str) -> None:
+	def get_execution_time(self, msg: str) -> str:
 		self.last_exec_time = time()
-		logging.info(f'{round(self.last_exec_time - self.start_time, 3)}s execution time. {msg}')
+		return f'{round(self.last_exec_time - self.start_time, 5)}s execution time. {msg}'
 
 	def get_best_ranking(self) -> RankedSet:
 		return self._ranking_best

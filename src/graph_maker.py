@@ -18,10 +18,10 @@ def plot(x: list, y: list, fig_name: str, plot_title: str):
 
 def run_controlled_simulation(parser: WMG, param_to_change: str, param_value):
 	values_dict = {
-		'initial_t': 500,
-		't_length': 900,
-		'max_uphill_moves': 100,
-		'cooling_ratio': 0.95
+		'initial_t': 10,
+		't_length': 90,
+		'max_uphill_moves': 150,
+		'cooling_ratio': 0.96
 	}
 
 	values_dict[param_to_change] = param_value
