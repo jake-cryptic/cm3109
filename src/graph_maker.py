@@ -20,7 +20,7 @@ def run_controlled_simulation(parser: WMG, param_to_change: str, param_value):
 	values_dict = {
 		'initial_t': 10,
 		't_length': 90,
-		'max_uphill_moves': 150,
+		'num_non_improve': 150,
 		'cooling_ratio': 0.96
 	}
 
@@ -30,7 +30,7 @@ def run_controlled_simulation(parser: WMG, param_to_change: str, param_value):
 	sa = SimulatedAnnealing(
 		initial_t=values_dict['initial_t'],
 		t_length=values_dict['t_length'],
-		max_uphill_moves=values_dict['max_uphill_moves'],
+		num_non_improve=values_dict['num_non_improve'],
 		cooling_ratio=values_dict['cooling_ratio']
 	)
 	sa.set_wmg(parser)

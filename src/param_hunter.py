@@ -22,11 +22,11 @@ def time_limit(seconds):
 		signal.alarm(0)
 
 
-def run_sa(parser, test_initial_t, test_tl, test_max_uphill_moves, test_cooling, limit_func_time = 12):
+def run_sa(parser, test_initial_t, test_tl, test_num_non_improve, test_cooling, limit_func_time = 12):
 	sa = SimulatedAnnealing(
 		initial_t=test_initial_t,
 		t_length=test_tl,
-		max_uphill_moves=test_max_uphill_moves,
+		num_non_improve=test_num_non_improve,
 		cooling_ratio=test_cooling / 100
 	)
 	sa.set_wmg(parser)
@@ -34,7 +34,7 @@ def run_sa(parser, test_initial_t, test_tl, test_max_uphill_moves, test_cooling,
 
 	hit_time_limit = False
 	try:
-		# Kill process if it takes longer than 3 seconds (stuck in max_uphill_moves)
+		# Kill process if it takes longer than 3 seconds (stuck in num_non_improve)
 		with time_limit(limit_func_time):
 			sa.run_outer()
 	except TimeoutException as e:
@@ -67,22 +67,22 @@ def run_hunter() -> None:
 			for test_tl in range(90, 150, 10):
 				current_params[2] = test_tl
 				print(f'- Iterated {test_tl=}')
-				for test_max_uphill_moves in range(70, 150, 10):
-					current_params[3] = test_max_uphill_moves
-					print(f'- Iterated {test_max_uphill_moves=}')
+				for test_num_non_improve in range(70, 150, 10):
+					current_params[3] = test_num_non_improve
+					print(f'- Iterated {test_num_non_improve=}')
 					print(f'-Best score currently: {best_score}, with param set: {best_params}, testing params:{current_params}')
 
-					score = run_sa(parser, test_initial_t, test_tl, test_max_uphill_moves, test_cooling)
+					score = run_sa(parser, test_initial_t, test_tl, test_num_non_improve, test_cooling)
 
 					if score <= best_score:
 						param_replay = REPLAY_COUNT
 						best_params = copy(current_params)
 						best_score = score
-						print(f'NEW BEST SCORE of {best_score} FOUND WITH PARAMS: {test_initial_t=}, {test_tl=}, {test_cooling=}, {test_max_uphill_moves=}')
+						print(f'NEW BEST SCORE of {best_score} FOUND WITH PARAMS: {test_initial_t=}, {test_tl=}, {test_cooling=}, {test_num_non_improve=}')
 
 						# If parameters are good, replay them to see if we get a better score
 						while param_replay > 0:
-							score = run_sa(parser, test_initial_t, test_tl, test_max_uphill_moves, test_cooling, 10)
+							score = run_sa(parser, test_initial_t, test_tl, test_num_non_improve, test_cooling, 10)
 							param_replay -= 1
 							if score <= best_score:
 								print(f'REPLAYING! {score} <= {best_score}')

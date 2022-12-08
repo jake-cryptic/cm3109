@@ -11,7 +11,7 @@ class SimulatedAnnealing:
 	current_t: float
 	initial_t: float
 	t_length: int
-	max_uphill_moves: int
+	num_non_improve: int
 	uphill_moves: int
 	cooling_ratio: float
 
@@ -25,7 +25,7 @@ class SimulatedAnnealing:
 	_ranking_current: RankedSet
 	_ranking_best: RankedSet
 
-	def __init__(self, initial_t: float, t_length: int, max_uphill_moves: int, cooling_ratio: float):
+	def __init__(self, initial_t: float, t_length: int, num_non_improve: int, cooling_ratio: float):
 		self.start_time = time()
 		self.last_exec_time = time()
 
@@ -34,10 +34,10 @@ class SimulatedAnnealing:
 		self.initial_t = initial_t  # Initial temperature
 		self.t_length = t_length  # Temperature length
 
-		self.max_uphill_moves = max_uphill_moves  # Maximum uphill moves
+		self.num_non_improve = num_non_improve  # Maximum uphill moves
 		self.uphill_moves = 0  	# Uphill moves reset to 0
 		self.cooling_ratio = cooling_ratio  # Change of the thermostat
-		logging.info(f'Running SimulatedAnnealing with parameters:\n\t- initial_t = {initial_t}\n\t- t_length = {t_length}\n\t- max_uphill_moves = {max_uphill_moves}\n\t- cooling_ratio = {cooling_ratio}')
+		logging.info(f'Running SimulatedAnnealing with parameters:\n\t- {initial_t=}\n\t- {t_length=}\n\t- {num_non_improve=}\n\t- {cooling_ratio=}')
 
 	def set_wmg(self, wmg: WMG) -> None:
 		self._wmg = wmg
@@ -55,8 +55,8 @@ class SimulatedAnnealing:
 
 	def run_outer(self) -> None:
 		# Stopping criterion
-		while self.uphill_moves < self.max_uphill_moves:
-			logging.debug(f'Outer loop iteration {self.uphill_moves} / {self.max_uphill_moves}')
+		while self.uphill_moves < self.num_non_improve:
+			logging.debug(f'Outer loop iteration {self.uphill_moves} / {self.num_non_improve}')
 
 			# Function to run the inner loop
 			self.run_inner()
@@ -67,7 +67,7 @@ class SimulatedAnnealing:
 	def run_inner(self) -> None:
 		for i in range(self.t_length):
 			# If we have reached max number of uphill moves break out of loop
-			if self.uphill_moves >= self.max_uphill_moves:
+			if self.uphill_moves >= self.num_non_improve:
 				break
 
 			# Generate a neighbouring solution to check
@@ -95,7 +95,7 @@ class SimulatedAnnealing:
 				if q < change_pb:
 					self._ranking_current = new_ranking
 					self.uphill_moves += 1
-					logging.debug(f'Uphill move counter: {self.uphill_moves} / {self.max_uphill_moves}')
+					logging.debug(f'Uphill move counter: {self.uphill_moves} / {self.num_non_improve}')
 
 	def get_execution_time(self, msg: str) -> str:
 		self.last_exec_time = time()
