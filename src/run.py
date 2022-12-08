@@ -31,17 +31,17 @@ def main() -> None:
 		exit(1)
 
 	sa = SimulatedAnnealing(
-		initial_t=8,
-		t_length=200,
-		max_uphill_moves=120,
-		cooling_ratio=0.98
+		initial_t=4,
+		t_length=100,
+		max_uphill_moves=100,
+		cooling_ratio=0.93
 	)
 	sa.set_wmg(parser)
 	sa.initialise_rankings()
 	sa.run_outer()
 
 	print(sa.get_execution_time(f'End of testing'))
-	print_rankings(sa.get_best_ranking(), parser)
+	#print_rankings(sa.get_best_ranking(), parser)
 	print(f'Best score was: {sa.get_best_ranking().score}')
 
 
