@@ -22,7 +22,7 @@ def time_limit(seconds):
 		signal.alarm(0)
 
 
-def run_sa(parser, test_initial_t, test_tl, test_max_uphill_moves, test_cooling, limit_func_time = 1):
+def run_sa(parser, test_initial_t, test_tl, test_max_uphill_moves, test_cooling, limit_func_time = 12):
 	sa = SimulatedAnnealing(
 		initial_t=test_initial_t,
 		t_length=test_tl,
@@ -58,16 +58,16 @@ def run_hunter() -> None:
 	current_params = [0, 0, 0, 0]
 	best_params = [0, 0, 0, 0]
 
-	for test_initial_t in range(200, 2000, 100):
+	for test_initial_t in range(10, 100, 5):
 		print(f'- Iterated {test_initial_t=}')
 		current_params[0] = test_initial_t
-		for test_cooling in range(60, 99, 3):
+		for test_cooling in range(90, 99, 3):
 			current_params[1] = test_cooling
 			print(f'- Iterated {test_cooling=}')
-			for test_tl in range(50, 350, 50):
+			for test_tl in range(90, 150, 10):
 				current_params[2] = test_tl
 				print(f'- Iterated {test_tl=}')
-				for test_max_uphill_moves in range(30, 120, 10):
+				for test_max_uphill_moves in range(70, 150, 10):
 					current_params[3] = test_max_uphill_moves
 					print(f'- Iterated {test_max_uphill_moves=}')
 					print(f'-Best score currently: {best_score}, with param set: {best_params}, testing params:{current_params}')
