@@ -20,10 +20,10 @@ def plot(x: list, y: list, fig_name: str, plot_title: str, xlab:str, ylab: str):
 
 def run_controlled_simulation(parser: WMG, param_to_change: str, param_value):
 	values_dict = {
-		'initial_t': 4,
+		'initial_t': 50,
 		't_length': 120,
-		'num_non_improve': 125,
-		'cooling_ratio': 0.95
+		'num_non_improve': 100,
+		'cooling_ratio': 0.97
 	}
 
 	values_dict[param_to_change] = param_value
@@ -59,17 +59,17 @@ def run_tests(parser: WMG) -> None:
 		plot(data['x'], data['y'], 'Kemeny Score', 'Initial Temperature vs Kemeny Score', 'Initial Temperature', 'Kemeny Score')
 		plot(data['x'], data['y1'], 'Kemeny Score', 'Initial Temperature vs time (ms)', 'Initial Temperature', 'time (ms)')
 
-	if False:
-		for test_cooling in range(50, 100, 1):
-			data['x'].append(test_cooling/100)
-			result = run_controlled_simulation(parser, 'cooling_ratio', test_cooling/100)
+	if True:
+		for test_cooling in range(5300, 10000, 1):
+			data['x'].append(test_cooling/10000)
+			result = run_controlled_simulation(parser, 'cooling_ratio', test_cooling/10000)
 			data['y'].append(result[0])
 			data['y1'].append(result[1])
 		plot(data['x'], data['y'], 'Kemeny Score', 'Cooling Ratio vs Kemeny Score', 'Cooling Ratio', 'Kemeny Score')
 		plot(data['x'], data['y1'], 'Kemeny Score', 'Cooling Ratio vs time (ms)', 'Cooling Ratio', 'time (ms)')
 
 	if False:
-		for test_tl in range(1, 125, 5):
+		for test_tl in range(12, 500, 1):
 			data['x'].append(test_tl)
 			result = run_controlled_simulation(parser, 't_length', test_tl)
 			data['y'].append(result[0])
