@@ -77,7 +77,7 @@ class SimulatedAnnealing:
 			# Compute the change of the cost
 			delta_cost = new_ranking.score - self._ranking_current.score
 
-			if new_ranking.score <= self._ranking_current.score:
+			if delta_cost <= 0:
 				# If this neighbour has the same or better score, move to it
 				self._ranking_current = copy(new_ranking)
 

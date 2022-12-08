@@ -31,8 +31,8 @@ def main() -> None:
 		exit(1)
 
 	sa = SimulatedAnnealing(
-		initial_t=500,
-		t_length=100,
+		initial_t=10,
+		t_length=90,
 		max_uphill_moves=120,
 		cooling_ratio=0.95
 	)
